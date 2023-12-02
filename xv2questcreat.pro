@@ -24,6 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    ../eternity_common/DBXV2/BdmFile.cpp \
+    ../eternity_common/DBXV2/BpeFile.cpp \
         main.cpp \
         mainwindow.cpp \
     ../eternity_common/tinyxml/tinystr.cpp \
@@ -103,6 +105,8 @@ SOURCES += \
     ../eternity_common/DBXV2/ErsFile.cpp
 
 HEADERS += \
+    ../eternity_common/DBXV2/BdmFile.h \
+    ../eternity_common/DBXV2/BpeFile.h \
         mainwindow.h \
     ../eternity_common/crypto/md5.h \
     ../eternity_common/crypto/rijndael.h \
