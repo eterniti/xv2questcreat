@@ -34,6 +34,7 @@ public:
     QAction *actionSave_as;
     QAction *actionExit;
     QAction *actionAbout;
+    QAction *actionToggle_dark_mode;
     QWidget *centralWidget;
     QTabWidget *tabWidget;
     QWidget *modInfoTab;
@@ -65,6 +66,7 @@ public:
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuAbout;
+    QMenu *menuView;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -81,6 +83,8 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
+        actionToggle_dark_mode = new QAction(MainWindow);
+        actionToggle_dark_mode->setObjectName(QStringLiteral("actionToggle_dark_mode"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         tabWidget = new QTabWidget(centralWidget);
@@ -175,6 +179,8 @@ public:
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuAbout = new QMenu(menuBar);
         menuAbout->setObjectName(QStringLiteral("menuAbout"));
+        menuView = new QMenu(menuBar);
+        menuView->setObjectName(QStringLiteral("menuView"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -184,12 +190,14 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuAbout->menuAction());
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionSave_as);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuAbout->addAction(actionAbout);
+        menuView->addAction(actionToggle_dark_mode);
         mainToolBar->addAction(actionOpen);
         mainToolBar->addAction(actionSave_as);
 
@@ -208,6 +216,7 @@ public:
         actionSave_as->setText(QApplication::translate("MainWindow", "Save as...", 0));
         actionExit->setText(QApplication::translate("MainWindow", "Exit", 0));
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
+        actionToggle_dark_mode->setText(QApplication::translate("MainWindow", "Toggle dark mode", 0));
         label->setText(QApplication::translate("MainWindow", "Name:", 0));
         label_4->setText(QApplication::translate("MainWindow", "GUID:", 0));
         guidButton->setText(QApplication::translate("MainWindow", "Generate new", 0));
@@ -228,6 +237,7 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(filesTab), QApplication::translate("MainWindow", "Files", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuAbout->setTitle(QApplication::translate("MainWindow", "Help", 0));
+        menuView->setTitle(QApplication::translate("MainWindow", "View", 0));
     } // retranslateUi
 
 };

@@ -3,6 +3,7 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 #include <QClipboard>
+#include <QStyleFactory>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -45,6 +46,9 @@ bool MainWindow::Initialize()
     QDir::setCurrent(qApp->applicationDirPath());
 
     Bootstrap(false, false);
+
+    if (config.dark_theme)
+        ToggleDarkTheme(false);
 
     x2m = new X2mFile();
     x2m->SetType(X2mType::NEW_QUEST);
@@ -470,6 +474,51 @@ bool MainWindow::Build()
     return true;
 }
 
+void MainWindow::ToggleDarkTheme(bool update_config)
+{
+    if (update_config)
+    {
+        config.dark_theme = !config.dark_theme;
+        config.Save();
+    }
+
+    static bool dark_theme = false;
+    static QPalette saved_palette;
+
+    if (!dark_theme)
+    {
+        saved_palette = qApp->palette();
+        //DPRINTF("%s\n", qApp->style()->metaObject()->className());
+
+        qApp->setStyle(QStyleFactory::create("Fusion"));
+        QPalette palette;
+        palette.setColor(QPalette::Window, QColor(53,53,53));
+        palette.setColor(QPalette::WindowText, Qt::white);
+        palette.setColor(QPalette::Base, QColor(15,15,15));
+        palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+        palette.setColor(QPalette::ToolTipBase, Qt::white);
+        palette.setColor(QPalette::ToolTipText, Qt::white);
+        palette.setColor(QPalette::Text, Qt::white);
+        palette.setColor(QPalette::Button, QColor(53,53,53));
+        palette.setColor(QPalette::ButtonText, Qt::white);
+        palette.setColor(QPalette::BrightText, Qt::red);
+
+        //palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
+        palette.setColor(QPalette::HighlightedText, Qt::black);
+        palette.setColor(QPalette::Disabled, QPalette::Text, Qt::darkGray);
+        palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
+        qApp->setPalette(palette);
+
+        dark_theme =true;
+    }
+    else
+    {
+        qApp->setStyle(QStyleFactory::create("windowsvista"));
+        qApp->setPalette(saved_palette);
+        dark_theme = false;
+    }
+}
+
 void MainWindow::on_actionOpen_triggered()
 {
     QString file = QFileDialog::getOpenFileName(this, "Open file", config.lf_editor_open, "X2M Files (*.x2m)");
@@ -668,3 +717,9 @@ void MainWindow::on_addDataButton_clicked()
     ui->addDataEdit->setText(dir);
     ui->addDataEdit->setEnabled(true);
 }
+
+void MainWindow::on_actionToggle_dark_mode_triggered()
+{
+    ToggleDarkTheme(true);
+}
+

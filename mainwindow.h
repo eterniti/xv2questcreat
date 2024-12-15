@@ -47,6 +47,8 @@ private slots:
 
     void on_addDataButton_clicked();
 
+    void on_actionToggle_dark_mode_triggered();
+
 private:
     Ui::MainWindow *ui;
     X2mFile *x2m;
@@ -59,6 +61,8 @@ private:
     void ProcessX2m();
     bool Validate();
     bool Build();
+
+    void ToggleDarkTheme(bool update_config);
 };
 
 #endif // MAINWINDOW_H
